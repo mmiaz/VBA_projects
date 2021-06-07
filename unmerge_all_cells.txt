@@ -1,0 +1,53 @@
+Sub Macro1()
+    'Read file
+    Dim MyFile As String
+    Dim Arr(100) As String
+    Dim count As Integer
+    MyFile = Dir("/excel samples vba/" & "*.xlsx")   'change to owned path
+    count = count + 1
+    Arr(count) = MyFile
+    
+
+    'save workbook name
+    Do While MyFile <> ""
+        MyFile = Dir
+        If MyFile = "" Then
+            Exit Do
+        End If
+        count = count + 1
+        Arr(count) = MyFile
+    Loop
+      
+
+    'Loop over workbook
+    For p = 1 To count
+        Dim R As Range, c As Range
+        Dim v As Variant
+        Dim xlSheet As Excel.Worksheet
+        Dim xlBook As Excel.Workbook
+        
+	      'read workbook and active for processing
+        Set xlBook = Workbooks.Open("/Users/miazheng/Downloads/excel samples vba/" & Arr(p))  'change to owned path
+        xlBook.Activate
+        
+        
+	'Loop over sheet
+        For m = 1 To xlBook.Sheets.count
+            Set xlSheet = xlBook.Sheets(m)
+            Worksheets(m).Activate
+            For Each c In xlSheet.UsedRange
+                If c.MergeCells Then
+                    v = c.Value
+                    Set R = c.MergeArea
+                    R.UnMerge
+                    R.Value = v
+                End If
+            Next c
+        Next
+        
+        
+	'save and close workbook
+        ActiveWorkbook.Save
+        ActiveWorkbook.Close
+    Next
+End Sub
