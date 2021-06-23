@@ -3,6 +3,8 @@ This is to store some of the VBA scripts written for different purposes
 
 
 ## Unmerge_all_cells.txt
+This is to unmerge all the merged cells in excel for better post-processing.
+
 Please follow the steps:
 1. please be noted files will be directly saved at the same path
 2. for .xls files they need to change to .xlsx, we cant process .xls file at current stage
